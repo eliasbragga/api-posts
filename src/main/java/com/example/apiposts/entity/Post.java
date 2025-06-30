@@ -29,6 +29,8 @@ public class Post {
 
     private String content;
 
+    private Integer likes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;

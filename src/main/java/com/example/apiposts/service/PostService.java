@@ -19,7 +19,7 @@ public class PostService {
     @Autowired
     private UserService userService;
 
-    public void save(PostDTO postDTO) {
+    public Post save(PostDTO postDTO) {
         User user;
 
         if (userService.existsByName(postDTO.author())) {
@@ -36,7 +36,13 @@ public class PostService {
                 .user(user)
                 .build();
 
-        postRepository.save(post);
+        return postRepository.save(post);
+    }
+
+    public Post updateLikesById(Long id, Integer likes) {
+        Post postToUpdate = findById(id);
+        postToUpdate.setLikes(likes);
+        return postRepository.save(postToUpdate);
     }
 
 
