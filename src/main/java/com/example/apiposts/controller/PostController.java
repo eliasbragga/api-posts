@@ -47,9 +47,8 @@ public class PostController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<Post> savePost(@PathVariable Long id, @RequestBody PostDTO postDTO) {
+    public ResponseEntity<PostDTO> savePost(@PathVariable Long id, @RequestBody PostDTO postDTO) {
         Post postSalvo = postService.updateLikesById(id, postDTO.likes());
-        return ResponseEntity.ok(postSalvo);
+        return ResponseEntity.ok(PostDTO.from(postSalvo));
     }
-
 }

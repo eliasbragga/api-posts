@@ -1,4 +1,10 @@
 package com.example.apiposts.DTOs;
 
-public record PostDTO(Long id,  String title, String content, Integer likes, String author) {
+import com.example.apiposts.entity.Post;
+
+public record PostDTO(Long id, String title, String content, Integer likes, String author) {
+
+     public static PostDTO from(Post post) {
+        return new PostDTO(post.getId(), post.getTitle(), post.getContent(), post.getLikes(), post.getUser().getName());
+    }
 }
