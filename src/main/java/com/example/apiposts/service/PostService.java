@@ -8,6 +8,7 @@ import com.example.apiposts.entity.Post;
 import com.example.apiposts.entity.User;
 import com.example.apiposts.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class PostService {
     }
 
     public List<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public PostWithCommentDTO findWithCommentsById(Long id) {
