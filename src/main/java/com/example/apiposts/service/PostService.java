@@ -1,7 +1,9 @@
 package com.example.apiposts.service;
 
 
+import com.example.apiposts.DTOs.CommentDTO;
 import com.example.apiposts.DTOs.PostDTO;
+import com.example.apiposts.DTOs.PostWithCommentDTO;
 import com.example.apiposts.entity.Post;
 import com.example.apiposts.entity.User;
 import com.example.apiposts.repository.PostRepository;
@@ -18,6 +20,9 @@ public class PostService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     public Post save(PostDTO postDTO) {
         User user;
@@ -52,6 +57,16 @@ public class PostService {
 
     public List<Post> findAll() {
         return postRepository.findAll();
+    }
+
+    public PostWithCommentDTO findWithCommentsById(Long id) {
+        Post post = findById(id);
+        List<CommentDTO> commentDTOs = commentService.findByPostId(id).stream()
+                .map(CommentDTO::from)
+                .toList();
+
+
+        return PostWithCommentDTO.from(post, commentDTOs);
     }
 
     public void deleteById(Long id) {
